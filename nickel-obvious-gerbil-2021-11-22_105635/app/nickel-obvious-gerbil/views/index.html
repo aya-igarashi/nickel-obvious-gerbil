@@ -1,0 +1,106 @@
+<!-- This is a static file -->
+<!-- served from your routes in server.js -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>EATag</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="/script.js" defer></script>
+  </head>
+  
+  <body>
+    <div class="container">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <div>
+      <p>
+       <h1>EATag<br></h1>
+       <h4>―食を豊かに―</h4>
+      </p>
+    </div>
+  
+   <div>
+      <button style="margin-bottom:50px; margin-top:20px" id="tosearch" class="btn btn-primary" type="submit">検索ページへ</button>
+   </div>
+  
+  <img style="margin-bottom:20px" src="https://s.kota2.net/1629962354.png" width="500" height="300">
+   
+<form>
+  <div class="form row">
+  <div class="form-group col">
+    <label for="junle">ジャンル</label>
+    <select class="form-control" id="junle">
+      <option>主食</option>
+      <option>おかず</option>
+      <option>汁物</option>
+      <option>おつまみ</option>
+      <option>デザート</option>
+    </select>
+  </div>
+  
+  <div class="form-group col-8">
+    <label for="name">料理名</label>
+    <input type="text" class="form-control" id="name" placeholder="例）アクアパッツア">
+  </div>
+   
+  
+  <div class="form-group">
+    <label for="link">HPリンク</label>
+    <input type="text" class="form-control" id="link" placeholder="https://www.com/xxx-xxx">
+  </div>
+  
+  <div class="form-group">
+    <label for="memo">メモ</label>
+    <input type="text" class="form-control" id="memo" placeholder="例）5分焼いたら焦げてしまった">
+  </div>
+  
+</form>
+  
+<form>
+  <div class="form-group">
+    <label style="margin-bottom:20px; margin-top:20px" for="rating">レビュー</label>
+    <input type="range" class="form-control-range" id="rating" min="0" max="5" step="0.1">
+    <span id="value">2.5</span>
+  </div>
+</form>
+  <div>
+      <button id="save2" class="btn btn-primary" type="button" onclick="saveDishes()">保存</button>
+  </div>
+  
+
+
+  
+    <script>
+      
+      function saveDishes() {
+       const textBox1 = document.getElementById('junle'); // テキストボックス
+       const junle = textBox1.options[textBox1.selectedIndex].innerText; // テキストボックスに書かれた内容
+       const textBox2 = document.getElementById('name'); // テキストボックス
+       const name = textBox2.value; // テキストボックスに書かれた内容
+       const textBox3 = document.getElementById('link'); // テキストボックス
+       const link = textBox3.value; // テキストボックスに書かれた内容
+       const textBox4 = document.getElementById('memo'); // テキストボックス
+       const memo = textBox4.value; // テキストボックスに書かれた内容
+       const textBox5 = document.getElementById('rating'); // テキストボックス
+       const rating = textBox5.value; // テキストボックスに書かれた内容
+        
+       const dish = {junle:junle, name:name, HPlink:link, memo:memo, rating:rating};
+
+        
+       const url = '/save'; // 通信先
+       const req = new XMLHttpRequest(); // 通信用オブジェクト
+       req.onreadystatechange = function(){
+       if(req.readyState == 4 && req.status == 200) {
+        alert('成功'); // 成功したらアラート表示
+       }
+      };
+      req.open('POST', url, true);
+      req.setRequestHeader('Content-Type', 'application/json');
+      req.send(JSON.stringify(dish)); // オブジェクトを文字列化して送信
+     };
+
+
+     </script>
+    </div>
+　　</body>
+</html>
